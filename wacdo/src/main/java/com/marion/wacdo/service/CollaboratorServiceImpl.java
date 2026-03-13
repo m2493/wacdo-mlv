@@ -12,6 +12,7 @@ import com.marion.wacdo.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
     private final CollaboratorRepository collaboratorRepository;
     private final ModelMapper modelMapper;
+    private PasswordEncoder passwordEncoder;
 
     public CollaboratorServiceImpl(CollaboratorRepository collaboratorRepository, ModelMapper modelMapper) {
         this.collaboratorRepository = collaboratorRepository;
@@ -50,6 +52,11 @@ public class CollaboratorServiceImpl implements CollaboratorService {
     @Override
     public CollaboratorCreateDTO create(CollaboratorCreateDTO collaboratorDto) {
         Collaborator collaborator = modelMapper.map(collaboratorDto, Collaborator.class); // DTO -> Entité
+
+        // Encoder le mot de passe avant de le sauvegarder
+        String encodedPassword = passwordEncoder.encode(collaboratorDto.getPassword());
+        collaborator.setPassword(encodedPassword);
+
         Collaborator savedCollaborator = collaboratorRepository.save(collaborator);          // Enregistre en base
         return modelMapper.map(savedCollaborator, CollaboratorCreateDTO.class); // Entité -> DTO
 

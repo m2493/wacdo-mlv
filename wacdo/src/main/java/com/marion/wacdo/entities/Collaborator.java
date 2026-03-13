@@ -8,7 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Collaborator {
+public class Collaborator implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,6 +40,20 @@ public class Collaborator {
 
     @OneToMany(mappedBy = "collaborator")
     private List<Affectation> affectations;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(isAdmin) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        return List.of();
+    }
+
+
+    @Override public boolean isAccountNonExpired(){return true;}
+    @Override public boolean isAccountNonLocked(){return true;}
+    @Override public boolean isCredentialsNonExpired(){return true;}
+    @Override public boolean isEnabled(){return true;}
 
 
 
