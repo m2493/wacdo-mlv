@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +16,7 @@ import java.util.List;
 
 @Setter
 @Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -49,6 +47,15 @@ public class Collaborator implements UserDetails {
         return List.of();
     }
 
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email; // Spring utilise getUsername() pour login
+    }
 
     @Override public boolean isAccountNonExpired(){return true;}
     @Override public boolean isAccountNonLocked(){return true;}
