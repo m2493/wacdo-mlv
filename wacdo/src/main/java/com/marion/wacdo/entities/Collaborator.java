@@ -25,9 +25,9 @@ public class Collaborator implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    private String lastName;
+    private String lastname;
     @NotNull
-    private String firstName;
+    private String firstname;
     @Email
     private String email;
     @PastOrPresent

@@ -20,8 +20,8 @@ public class ConfigModelMapper {
         typeMap.addMappings(mapper -> {
             // Collaborator
             mapper.map(src -> src.getCollaborator().getId(), AffectationDTO::setCollaboratorId);
-            mapper.map(src -> src.getCollaborator().getFirstName(), AffectationDTO::setCollaboratorFirstName);
-            mapper.map(src -> src.getCollaborator().getLastName(), AffectationDTO::setCollaboratorLastName);
+            mapper.map(src -> src.getCollaborator().getFirstname(), AffectationDTO::setCollaboratorFirstName);
+            mapper.map(src -> src.getCollaborator().getLastname(), AffectationDTO::setCollaboratorLastName);
             mapper.map(src -> src.getCollaborator().getEmail(), AffectationDTO::setCollaboratorEmail);
 
             // Job

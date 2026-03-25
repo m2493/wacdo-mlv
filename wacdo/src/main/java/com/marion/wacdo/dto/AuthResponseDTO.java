@@ -1,5 +1,9 @@
 package com.marion.wacdo.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
 
 public class AuthResponseDTO {
 

@@ -10,6 +10,7 @@ import com.marion.wacdo.repository.CollaboratorRepository;
 import com.marion.wacdo.repository.JobRepository;
 import com.marion.wacdo.repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,16 +21,17 @@ import java.util.List;
 
 @Service
 @Transactional
-
+@Slf4j
 public class CollaboratorServiceImpl implements CollaboratorService {
 
     private final CollaboratorRepository collaboratorRepository;
     private final ModelMapper modelMapper;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public CollaboratorServiceImpl(CollaboratorRepository collaboratorRepository, ModelMapper modelMapper) {
+    public CollaboratorServiceImpl(CollaboratorRepository collaboratorRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.collaboratorRepository = collaboratorRepository;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -67,9 +69,11 @@ public class CollaboratorServiceImpl implements CollaboratorService {
 
         Collaborator collaborator = collaboratorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Collaborator not found with id : " + id));
-
+        log.info("collaborator id : {} " ,collaborator);
+        log.info("collaborator id : {} " ,collaboratorDTO);
         modelMapper.map(collaboratorDTO, collaborator); // copie les champs dans l'entité existante
-
+        log.info("collaborator id : {} " ,collaborator);
+        log.info("collaborator id : {} " ,collaboratorDTO);
         Collaborator updatedCollaborator = collaboratorRepository.save(collaborator);
 
         return modelMapper.map(updatedCollaborator, CollaboratorDTO.class);

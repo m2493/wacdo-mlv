@@ -15,8 +15,8 @@ public interface CollaboratorRepository extends JpaRepository <Collaborator, Lon
 
             @Query(value = """
     SELECT * FROM collaborator
-    WHERE (:lastname IS NULL OR LOWER(last_name) LIKE LOWER(CONCAT('%', :lastname, '%')))
-      AND (:firstname IS NULL OR LOWER(first_name) LIKE LOWER(CONCAT('%', :firstname, '%')))
+    WHERE (:lastname IS NULL OR LOWER(lastname) LIKE LOWER(CONCAT('%', :lastname, '%')))
+      AND (:firstname IS NULL OR LOWER(firstname) LIKE LOWER(CONCAT('%', :firstname, '%')))
       AND (:email IS NULL OR LOWER(email) LIKE LOWER(CONCAT('%', :email, '%')))
 """, nativeQuery = true)
     List<Collaborator> listerFiltrer(
