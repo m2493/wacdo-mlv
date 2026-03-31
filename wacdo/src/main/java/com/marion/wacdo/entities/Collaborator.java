@@ -42,9 +42,13 @@ public class Collaborator implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(isAdmin) {
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_ADMIN"),
+                    new SimpleGrantedAuthority("ROLE_USER")
+            );
         }
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+
     }
 
     @Override

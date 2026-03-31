@@ -19,7 +19,7 @@ public class JobServiceImplIntegrationTest {
     @Autowired
     private JobRepository jobRepository;
 
-    @Test
+    /*@Test
     void shouldCreateJob() {
         JobDTO dto = new JobDTO();
         dto.setLabelFunction("Serveur");
@@ -30,7 +30,7 @@ public class JobServiceImplIntegrationTest {
         assertThat(result.getLabelFunction()).isEqualTo("Serveur");
     }
 
-    /*@Test
+    @Test
     void shouldFindAllJobs() {
         JobDTO dto = new JobDTO();
         dto.setName("Manager");
