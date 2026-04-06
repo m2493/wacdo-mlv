@@ -31,9 +31,12 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        /* à remettre au moment de faire la partie sécurité de react
                         .requestMatchers("/login").permitAll()
                         .anyRequest().hasRole("ADMIN")
-                        )
+                        */
+                        .anyRequest().permitAll()
+                )
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
                 ;
 
