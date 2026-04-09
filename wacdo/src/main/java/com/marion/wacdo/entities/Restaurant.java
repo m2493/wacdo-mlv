@@ -24,7 +24,7 @@ public class Restaurant {
     @NotNull
     private String address;
     @Size(min = 5, max = 5)
-    private String zipcode;
+    private String postalCode;
     @NotNull
     private String city;
 

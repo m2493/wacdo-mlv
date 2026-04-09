@@ -32,7 +32,7 @@ public class ConfigModelMapper {
             mapper.map(src -> src.getRestaurant().getId(), AffectationDTO::setRestaurantId);
             mapper.map(src -> src.getRestaurant().getName(), AffectationDTO::setRestaurantName);
             mapper.map(src -> src.getRestaurant().getCity(), AffectationDTO::setRestaurantCity);
-            mapper.map(src -> src.getRestaurant().getZipcode(), AffectationDTO::setRestaurantPostalCode);
+            mapper.map(src -> src.getRestaurant().getPostalCode(), AffectationDTO::setRestaurantPostalCode);
         });
 
         return modelMapper;
