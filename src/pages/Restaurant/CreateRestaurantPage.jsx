@@ -1,6 +1,6 @@
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
+import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../../components/forms/FormInput";
 
@@ -9,17 +9,22 @@ export default function CreateRestaurantPage() {
 
   const initialValues = {
     name: "",
+    address: "",
     city: "",
+    postalCode : ""
+
   };
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Le nom est requis"),
+    address: Yup.string().required("L'adresse est requise"),
     city: Yup.string().required("La ville est requise"),
+    postalCode: Yup.string().required("Le code postal est requis"),
   });
 
   const handleSubmit = async (values) => {
     try {
-      await axios.post("/api/restaurants", values);
+      await api.post("/api/restaurants", values);
       navigate("/restaurants"); // retour à la liste
     } catch (err) {
       console.error(err);
@@ -38,6 +43,8 @@ export default function CreateRestaurantPage() {
         <Form className="bg-white shadow rounded p-6">
           <FormInput name="name" label="Nom du restaurant" />
           <FormInput name="city" label="Ville" />
+          <FormInput name="address" label="Adresse" />
+          <FormInput name="postalCode" label="Code postal" />
 
           <div className="flex justify-end gap-2 mt-4">
             <button
