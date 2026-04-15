@@ -52,8 +52,8 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .map(a -> {
                     CollaboratorEnPosteDTO c = new CollaboratorEnPosteDTO();
                     c.setId(a.getCollaborator().getId());
-                    c.setFirstname(a.getCollaborator().getFirstname());
-                    c.setLastname(a.getCollaborator().getLastname());
+                    c.setFirstname(a.getCollaborator().getFirstName());
+                    c.setLastname(a.getCollaborator().getLastName());
                     c.setEmail(a.getCollaborator().getEmail());
                     c.setJobTitle(a.getJob().getLabelFunction());
                     c.setStartDateAffectation(a.getStartDateAffectation().toString());

@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .cors(cors -> {}) // ✅ active CORS
                 .csrf(csrf -> csrf.disable())
 
+                .authenticationProvider(authenticationProvider(userDetailsService, passwordEncoder()))
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login").permitAll()
                         .anyRequest().hasRole("ADMIN")

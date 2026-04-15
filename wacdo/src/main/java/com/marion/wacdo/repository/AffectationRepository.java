@@ -30,7 +30,7 @@ public interface AffectationRepository extends JpaRepository<Affectation, Long> 
     WHERE a.restaurant.id = :restaurantId
       AND a.endDateAffectation IS NULL
       AND (:jobTitle IS NULL OR LOWER(j.labelFunction) LIKE LOWER(CONCAT('%', :jobTitle, '%')))
-      AND (:firstName IS NULL OR LOWER(c.firstname) LIKE LOWER(CONCAT('%', :firstName, '%')))
+      AND (:firstName IS NULL OR LOWER(c.firstName) LIKE LOWER(CONCAT('%', :firstName, '%')))
       AND (:startDate IS NULL OR a.startDateAffectation >= :startDate)
 """)
     List<Affectation> findCurrentByRestaurantWithFilters(

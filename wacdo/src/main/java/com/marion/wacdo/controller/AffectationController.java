@@ -45,7 +45,24 @@ public class AffectationController {
 
     @GetMapping("/restaurant/{id}/current")
     public List<AffectationDTO> getCurrentByRestaurant(@PathVariable Long id) {
-        return affectationService.getCurrentByRestaurant(id);
+
+        List<AffectationDTO> result = affectationService.getCurrentByRestaurant(id);
+
+        System.out.println("=== AFFECTATIONS RAW BACKEND ===");
+        for (AffectationDTO a : result) {
+            System.out.println("ID = " + a.getId());
+            System.out.println("FIRSTNAME = " + a.getCollaboratorFirstName());
+            System.out.println("LASTNAME = " + a.getCollaboratorLastName());
+            System.out.println("EMAIL = " + a.getCollaboratorEmail());
+            System.out.println("JOB = " + a.getJobTitle());
+            System.out.println("START = " + a.getStartDateAffectation());
+            System.out.println("END = " + a.getEndDateAffectation());
+            System.out.println("----------------------");
+        }
+
+        return result;
+
+        /* A REMETTRE return affectationService.getCurrentByRestaurant(id);*/
     }
 
     @PostMapping

@@ -39,8 +39,8 @@ public class CollaboratorServiceImplIntegrationTest {
 
     private Collaborator createCollaborator(String firstname, String lastname, String email) {
         Collaborator collaborator = new Collaborator();
-        collaborator.setFirstname(firstname);
-        collaborator.setLastname(lastname);
+        collaborator.setFirstName(firstname);
+        collaborator.setLastName(lastname);
         collaborator.setEmail(email);
         collaborator.setPassword("password");
 
@@ -75,7 +75,7 @@ public class CollaboratorServiceImplIntegrationTest {
 
         CollaboratorDTO dto = new CollaboratorDTO();
         dto.setFirstname("Pierre");
-        dto.setLastname(collaborator1.getLastname());
+        dto.setLastname(collaborator1.getLastName());
         dto.setId(collaborator1.getId());
         System.out.println(collaborator1.getId());
         System.out.println(dto.getId());
@@ -87,7 +87,7 @@ public class CollaboratorServiceImplIntegrationTest {
         Collaborator entity =
                 collaboratorRepository.findById(collaborator1.getId()).orElseThrow();
 
-        assertEquals("Pierre", entity.getFirstname());
+        assertEquals("Pierre", entity.getFirstName());
     }
 
     @Test

@@ -30,30 +30,39 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     FilterChain chain)
             throws ServletException, IOException {
 
+        //  ICI : on ignore directement /login
+        String path = request.getServletPath();
+
+        if (path.equals("/login")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        //  ensuite seulement on continue
         String header = request.getHeader("Authorization");
 
         String username = null;
         String jwt = null;
 
-        if(header != null && header.startsWith("Bearer ")) {
+        if (header != null && header.startsWith("Bearer ")) {
             jwt = header.substring(7);
             username = jwtUtilService.extractUsername(jwt);
         }
 
-        if(username != null &&
-                SecurityContextHolder.getContext().getAuthentication()==null){
+        if (username != null &&
+                SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails =
                     userDetailsService.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(
-                            userDetails,null,userDetails.getAuthorities());
+                            userDetails, null, userDetails.getAuthorities());
 
             SecurityContextHolder.getContext()
                     .setAuthentication(authToken);
         }
 
-        chain.doFilter(request,response);
+        chain.doFilter(request, response);
     }
 }
