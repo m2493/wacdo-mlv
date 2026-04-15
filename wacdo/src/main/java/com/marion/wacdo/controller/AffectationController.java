@@ -1,5 +1,6 @@
 package com.marion.wacdo.controller;
 
+import com.marion.wacdo.dto.AffectationCreateDTO;
 import com.marion.wacdo.dto.AffectationDTO;
 import com.marion.wacdo.service.AffectationService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -66,7 +67,10 @@ public class AffectationController {
     }
 
     @PostMapping
-    public AffectationDTO create(@RequestBody AffectationDTO dto) {
+    public AffectationDTO create(@RequestBody AffectationCreateDTO dto)
+    {
+        System.out.println("DTO RECU = " + dto);
+        System.out.println("START DATE = " + dto.getStartDateAffectation());
         return affectationService.create(dto);
     }
 

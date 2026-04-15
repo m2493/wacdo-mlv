@@ -126,7 +126,7 @@ public class CollaboratorControllerSecurityTest {
     void adminCanUpdateCollaborator() throws Exception {
         CollaboratorDTO dto = new CollaboratorDTO();
         dto.setId(1L);
-        dto.setFirstname("Updated");
+        dto.setFirstName("Updated");
 
         when(collaboratorService.update(any(Long.class), any(CollaboratorDTO.class)))
                 .thenReturn(dto);
@@ -143,7 +143,7 @@ public class CollaboratorControllerSecurityTest {
     @WithMockUser(username = "user@test.com", roles = {"USER"})
     void userCannotUpdateCollaborator() throws Exception {
         CollaboratorDTO dto = new CollaboratorDTO();
-        dto.setFirstname("Updated");
+        dto.setFirstName("Updated");
         String body = objectMapper.writeValueAsString(dto);
 
         mockMvc.perform(put("/api/collaborators/1")

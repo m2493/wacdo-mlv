@@ -12,13 +12,16 @@ import java.time.LocalDate;
 public class AffectationCreateDTO {
 
     @NotNull
+    private Long collaboratorId;
+
+    @NotNull
     private Long jobId;
 
     @NotNull
     private Long restaurantId;
 
     @NotNull
-    private LocalDate startDate;
+    private LocalDate startDateAffectation;
 
-    private LocalDate endDate;
+    private LocalDate endDateAffectation;
 }

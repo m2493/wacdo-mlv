@@ -28,10 +28,12 @@ public interface CollaboratorRepository extends JpaRepository <Collaborator, Lon
 
     @Query(value = """
         SELECT c FROM Collaborator c
-        WHERE c.id NOT IN (
-            SELECT a.collaborator.id FROM Affectation a
-            WHERE a.endDateAffectation IS NULL
-        )
+           WHERE NOT EXISTS (
+               SELECT 1
+               FROM Affectation a
+               WHERE a.collaborator = c
+               AND a.endDateAffectation IS NULL
+           )
     """)
     List<Collaborator> findCollaboratorsNonAffectes();
 

@@ -1,5 +1,6 @@
 package com.marion.wacdo.service;
 
+import com.marion.wacdo.dto.AffectationCreateDTO;
 import com.marion.wacdo.dto.AffectationDTO;
 
 import java.time.LocalDate;
@@ -24,7 +25,7 @@ public interface AffectationService {
     List<AffectationDTO> getCurrentByRestaurant(Long restaurantId);
 
     // Créer une nouvelle affectation
-    AffectationDTO create(AffectationDTO dto);
+    AffectationDTO create(AffectationCreateDTO dto);
 
     // Mettre à jour une affectation
     AffectationDTO update(Long id, AffectationDTO dto);

@@ -1,5 +1,6 @@
 package com.marion.wacdo.service;
 
+import com.marion.wacdo.dto.AffectationCreateDTO;
 import com.marion.wacdo.dto.AffectationDTO;
 import com.marion.wacdo.entities.Affectation;
 import com.marion.wacdo.repository.AffectationRepository;
@@ -78,7 +79,7 @@ public class AffectationServiceImpl implements AffectationService {
 
     // --- Création d'une affectation ---
     @Override
-    public AffectationDTO create(AffectationDTO dto) {
+    public AffectationDTO create(AffectationCreateDTO dto) {
 
         var collaborator = collaboratorRepository.findById(dto.getCollaboratorId())
                 .orElseThrow(() -> new RuntimeException("Collaborator not found"));

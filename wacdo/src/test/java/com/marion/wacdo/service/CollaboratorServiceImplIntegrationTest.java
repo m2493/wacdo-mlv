@@ -54,8 +54,8 @@ public class CollaboratorServiceImplIntegrationTest {
 
         // GIVEN
         CollaboratorCreateDTO dto = new CollaboratorCreateDTO();
-        dto.setFirstname("Paul");
-        dto.setLastname("Durand");
+        dto.setFirstName("Paul");
+        dto.setLastName("Durand");
         dto.setEmail("paul@test.com");
         dto.setPassword("1234");
 
@@ -64,7 +64,7 @@ public class CollaboratorServiceImplIntegrationTest {
 
         // THEN
         assertNotNull(result);
-        assertEquals("Paul", result.getFirstname());
+        assertEquals("Paul", result.getFirstName());
 
         List<Collaborator> collaborators = collaboratorRepository.findAll();
         assertEquals(3, collaborators.size());
@@ -74,15 +74,15 @@ public class CollaboratorServiceImplIntegrationTest {
     void shouldUpdateCollaborator() {
 
         CollaboratorDTO dto = new CollaboratorDTO();
-        dto.setFirstname("Pierre");
-        dto.setLastname(collaborator1.getLastName());
+        dto.setFirstName("Pierre");
+        dto.setLastName(collaborator1.getLastName());
         dto.setId(collaborator1.getId());
         System.out.println(collaborator1.getId());
         System.out.println(dto.getId());
         CollaboratorDTO updated =
                 collaboratorService.update(collaborator1.getId(), dto);
 
-        assertEquals("Pierre", updated.getFirstname());
+        assertEquals("Pierre", updated.getFirstName());
 
         Collaborator entity =
                 collaboratorRepository.findById(collaborator1.getId()).orElseThrow();
@@ -117,7 +117,7 @@ public class CollaboratorServiceImplIntegrationTest {
 
         // THEN
         assertEquals(1, result.size());
-        assertEquals("Dupont", result.get(0).getLastname());
+        assertEquals("Dupont", result.get(0).getLastName());
     }
 
     @Test

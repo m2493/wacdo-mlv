@@ -13,10 +13,10 @@ public abstract class CollaboratorBaseDTO {
         private Long id;
 
         @NotBlank(message = "Le nom est obligatoire")
-        private String lastname;
+        private String lastName;
 
         @NotBlank(message = "Le prénom est obligatoire")
-        private String firstname;
+        private String firstName;
 
         @NotBlank(message = "L'email est obligatoire")
         @Email(message = "Format d'email invalide")
