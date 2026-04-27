@@ -8,12 +8,14 @@ import Restaurant from "./pages/Restaurant/Restaurants";
 import RestaurantDetail from "./pages/Restaurant/RestaurantDetail";
 import CreateRestaurantPage from "./pages/Restaurant/CreateRestaurantPage";
 
+import Collaborator from "./pages/Collaborator/Collaborators";
+import CollaboratorDetail from "./pages/Collaborator/CollaboratorDetail";
+import CreateCollaboratorPage from "./pages/Collaborator/CreateCollaboratorPage";
+
 import Function from "./pages/Function/Functions";
-/*import FunctionDetail from "./pages/Function/FunctionDetail";*/
 import CreateFunctionPage from "./pages/Function/CreateFunctionPage";
 
 import Affectation from "./pages/Affectations";
-import Collaborator from "./pages/Collaborators";
 import Navbar from "./pages/Navbar";
 
 
@@ -58,6 +60,24 @@ function App() {
             element={
               <ProtectedRoute>
                 <Collaborator />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/collaborators/:id"
+            element={
+              <ProtectedRoute>
+                <CollaboratorDetail />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/collaborators/create"
+            element={
+              <ProtectedRoute>
+                <CreateCollaboratorPage />
               </ProtectedRoute>
             }
           />
