@@ -7,10 +7,15 @@ import Login from "./pages/Login";
 import Restaurant from "./pages/Restaurant/Restaurants";
 import RestaurantDetail from "./pages/Restaurant/RestaurantDetail";
 import CreateRestaurantPage from "./pages/Restaurant/CreateRestaurantPage";
+
+import Function from "./pages/Function/Functions";
+/*import FunctionDetail from "./pages/Function/FunctionDetail";*/
+import CreateFunctionPage from "./pages/Function/CreateFunctionPage";
+
 import Affectation from "./pages/Affectations";
 import Collaborator from "./pages/Collaborators";
 import Navbar from "./pages/Navbar";
-import Function from "./pages/Functions";
+
 
 function App() {
   return (
@@ -62,6 +67,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Function />
+              </ProtectedRoute>
+            }
+          />
+
+                    <Route
+            path="/function/create"
+            element={
+              <ProtectedRoute>
+                <CreateFunctionPage />
               </ProtectedRoute>
             }
           />
