@@ -8,18 +8,18 @@ export default function CreateCollaboratorPage() {
   const navigate = useNavigate();
 
   const initialValues = {
-    name: "",
-    address: "",
-    city: "",
-    postalCode : ""
-
-  };
+    lastName: "",
+    firstName: "",
+    email: "",
+    password: ""
+      };
 
   const validationSchema = Yup.object({
-    name: Yup.string().required("Le nom est requis"),
-    address: Yup.string().required("L'adresse est requise"),
-    city: Yup.string().required("La ville est requise"),
-    postalCode: Yup.string().required("Le code postal est requis"),
+    lastName: Yup.string().required("Le nom est requis"),
+    firstName: Yup.string().required("Le prénom est requis"),
+    email: Yup.string().required("L'email est requis"),
+    password: Yup.string().required("Le mot de passe est requis"),
+    
   });
 
   const handleSubmit = async (values) => {
@@ -41,10 +41,11 @@ export default function CreateCollaboratorPage() {
         onSubmit={handleSubmit}
       >
         <Form className="bg-white shadow rounded p-6">
-          <FormInput name="name" label="Nom du restaurant" />
-          <FormInput name="city" label="Ville" />
-          <FormInput name="address" label="Adresse" />
-          <FormInput name="postalCode" label="Code postal" />
+          <FormInput name="lastName" label="Nom " />
+          <FormInput name="firstName" label="Prénom" />
+          <FormInput name="email" label="Email" />
+          <FormInput name="password" label="Mot de passe" />
+          
 
           <div className="flex justify-end gap-2 mt-4">
             <button

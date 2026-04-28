@@ -11,6 +11,7 @@ import CreateRestaurantPage from "./pages/Restaurant/CreateRestaurantPage";
 import Collaborator from "./pages/Collaborator/Collaborators";
 import CollaboratorDetail from "./pages/Collaborator/CollaboratorDetail";
 import CreateCollaboratorPage from "./pages/Collaborator/CreateCollaboratorPage";
+import EditCollaboratorPage from "./pages/Collaborator/EditCollaboratorPage";
 
 import Function from "./pages/Function/Functions";
 import CreateFunctionPage from "./pages/Function/CreateFunctionPage";
@@ -81,6 +82,17 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+<Route
+            path="/collaborators/:id/edit"
+            element={
+              <ProtectedRoute>
+                <EditCollaboratorPage />
+              </ProtectedRoute>
+            }
+          />
+
+
 
           <Route
             path="/function"

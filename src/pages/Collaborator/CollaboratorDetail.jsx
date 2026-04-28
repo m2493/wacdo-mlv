@@ -1,114 +1,121 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/axios";
-import Modal from "../../components/Modal";
-import ListWithFilter from "../../components/ListWithFilter";
 import Card from "../../components/Card";
-import AssignCollaboratorForm from "../../components/forms/AssignCollaboratorForm";
 
 export default function CollaboratorDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate(); 
 
   const [collaborator, setCollaborator] = useState(null);
   const [affectations, setAffectations] = useState([]);
-  const [history, setHistory] = useState([]);
 
-  const [loading, setLoading] = useState(true);
-  const [showAssignModal, setShowAssignModal] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
+  const [jobFilter, setJobFilter] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, []);
 
-  const fetchData = async () => {
-    try {
-      const resCollaborator = await api.get(`/api/collaborators/${id}`);
-      setCollaborator(resCollaborator.data);
+  async function fetchData() {
+    const collabRes = await api.get("/api/collaborators");
+    const collab = collabRes.data.find(c => c.id == id);
+    setCollaborator(collab);
 
-      /*const resAffectations = await api.get(`/api/affectations/restaurant/${id}/current`);
+    const affRes = await api.get(`/api/affectations/collaborator/${id}`);
+    setAffectations(affRes.data);
+  }
 
-      console.log("RAW AFFECTATIONS =", resAffectations.data);
+  if (!collaborator) return <p className="p-6">Chargement...</p>;
 
-      setAffectations(resAffectations.data);*/
+  const filtered = affectations.filter(a => {
+    const matchJob =
+      jobFilter === "" ||
+      a.jobTitle?.toLowerCase().includes(jobFilter.toLowerCase());
 
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const matchDate =
+      dateFilter === "" ||
+      a.startDateAffectation === dateFilter;
 
-  /*const loadHistory = async () => {
-    const res = await api.get("/api/affectations");
-    setHistory(res.data.filter(a => a.restaurantId === Number(id)));
-  };*/
+    return matchJob && matchDate;
+  });
 
-  /*const handleAssign = async (data) => {
-    try {
-      await api.post("/api/affectations", {
-        collaboratorId: data.collaboratorId,
-        restaurantId: Number(id),
-        jobId: data.jobId,
-        startDateAffectation: data.startDateAffectation 
-      });
+  const today = new Date().toISOString().split("T")[0];
 
-      setShowAssignModal(false);
-      fetchData();
+  const current = filtered.filter(
+    a =>
+      !a.endDateAffectation ||
+      a.endDateAffectation >= today
+  );
 
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  */
-
-  if (loading) return <p className="p-6">Chargement...</p>;
-  if (!collaborator) return <p className="p-6">Collaborateur introuvable</p>;
+  const history = filtered.filter(
+    a =>
+      a.endDateAffectation &&
+      a.endDateAffectation < today
+  );
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">{collaboratorFirstName}</h1>
+    <div className="p-6 space-y-6">
 
-      <div className="flex gap-2 mb-4">
-        <button
-          className="bg-yellow-500 text-white px-4 py-2 rounded"
-          onClick={() => setShowAssignModal(true)}
-        >
-          Affecter
-        </button>
-
-        <button
-          className="bg-gray-500 text-white px-4 py-2 rounded"
-          onClick={() => {
-            setShowHistory(!showHistory);
-            loadHistory();
-          }}
-        >
-          Historique
-        </button>
-      </div>
-
-          <ListWithFilter
-        items={showHistory ? history : affectations}
-        filterFields={[
-          { name: "collaboratorLastName", placeholder: "Nom" },
-          { name: "jobTitle", placeholder: "Poste" },
-          { name: "startDate", placeholder: "Date début", type: "date" }
-        ]}
-        renderItem={a => (
-          <Card
-            key={a.id}
-            title={`${a.collaboratorFirstName} ${a.collaboratorLastName}`.trim() || a.collaboratorEmail}
-            subtitle={`${a.jobTitle} - ${a.startDateAffectation} ${a.endDateAffectation ? "→ " + a.endDateAffectation : ""}`}
-        />
-        )}
+      <Card
+        title={`${collaborator.lastName} ${collaborator.firstName}`}
+        subtitle={collaborator.email}
       />
 
-      {showAssignModal && (
-        <Modal title="Affecter un collaborateur" onClose={() => setShowAssignModal(false)}>
-          <AssignCollaboratorForm onAssign={handleAssign} />
-        </Modal>
-      )}
+      <div className="grid grid-cols-2 gap-4">
+        <input
+          placeholder="Filtrer par poste"
+          value={jobFilter}
+          onChange={e => setJobFilter(e.target.value)}
+          className="border p-2 rounded"
+        />
+
+        <input
+          type="date"
+          value={dateFilter}
+          onChange={e => setDateFilter(e.target.value)}
+          className="border p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <h2 className="text-xl font-bold mb-3">
+          Affectations en cours
+        </h2>
+
+        {current.map(a => (
+          <Card
+            key={a.id}
+            title={a.jobTitle}
+            subtitle={`Début : ${a.startDateAffectation}`}
+          />
+        ))}
+      </div>
+
+      <div>
+        <h2 className="text-xl font-bold mb-3">
+          Historique des affectations
+        </h2>
+
+        {history.map(a => (
+          <Card
+            key={a.id}
+            title={a.jobTitle}
+            subtitle={`Du ${a.startDateAffectation} au ${a.endDateAffectation}`}
+          />
+        ))}
+
+
+<div className="flex justify-end">
+  <button
+    onClick={() => navigate(`/collaborators/${id}/edit`)}
+    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+  >
+    Modifier / Affecter un nouveau poste
+  </button>
+</div>
+
+      </div>
     </div>
   );
 }

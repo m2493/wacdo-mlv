@@ -31,11 +31,40 @@ console.log(res.data);
     fetchCollaborators();
   }, []);
 
+  // Recherche collaborateurs non affectés
+  async function fetchNonAffectes() {
+    try {
+      setLoading(true);
+
+      const res = await api.get("/api/collaborators/non-affectes");
+      const data =
+        typeof res.data === "string"
+          ? JSON.parse(res.data)
+          : res.data;
+
+      setCollaborators(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
   if (loading) return <p className="p-6">Chargement...</p>;
 
   return (
     <div className="p-6">
       <div className="flex justify-end mb-4">
+        
+        <button
+          onClick={fetchNonAffectes}
+          className="bg-orange-500 text-white px-4 py-2 rounded"
+        >
+          Rechercher les collaborateurs non affectés
+        </button>
+        
+        
         <button 
           onClick={() => navigate("/collaborators/create")}
           className="bg-blue-500 text-white px-4 py-2 rounded"
